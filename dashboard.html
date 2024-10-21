@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styling for the account section */
+        #account {
+            font-size: 20px; /* Bigger font for account details */
+        }
+        #account h3 {
+            font-size: 24px; /* Bigger font for subjects enrolled */
+            margin-top: 20px; /* Space above the subjects enrolled section */
+        }
+        #account ul {
+            font-size: 20px; /* Bigger font for the list of subjects */
+            padding-left: 20px; /* Add padding to the left */
+        }
+        #account ul li {
+            padding: 10px 0; /* Add vertical padding to list items */
+        }
+
+        /* Mobile-responsive styles */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column; /* Stack items vertically */
+                align-items: flex-start; /* Align items to the left */
+                padding: 10px; /* Reduce padding for mobile */
+                margin-bottom: 20px; /* Add space below navbar */
+            }
+
+            .nav-links {
+                flex-direction: row; /* Keep links in a row */
+                justify-content: space-between; /* Space them evenly */
+                width: 100%; /* Full width for links */
+            }
+
+            .nav-links li {
+                margin: 0; /* Remove margin for mobile */
+                width: auto; /* Automatic width for each link */
+            }
+
+            .nav-links a {
+                padding: 10px; /* Add padding to links for better tap target */
+                text-align: center; /* Center text in mobile view */
+            }
+
+            .container {
+                width: 90%; /* Adjust container width for mobile */
+            }
+
+            /* Add margin for Available PDFs section */
+            .subject-section {
+                margin: 40px 0; /* Increase margin for better spacing on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar">
+        <h1>Dashboard</h1>
+        <ul class="nav-links">
+            <li style="margin-left: auto;"><a href="#" onclick="showAccount()">My Account</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main content area -->
+    <div class="container">
+        <h2>Available PDFs</h2>
+        <div id="subjects" class="subject-section">
+            <h3>Math</h3>
+            <ul>
+                <li><a href="pdfs/ML1.pdf" download>Machine Learning.pdf</a></li>
+                <li><a href="pdfs/Geometry.pdf" download>Geometry.pdf</a></li>
+                <li><a href="pdfs/Calculus.pdf" download>Calculus.pdf</a></li>
+            </ul>
+            <h3>Science</h3>
+            <ul>
+                <li><a href="pdfs/Physics.pdf" download>Physics.pdf</a></li>
+                <li><a href="pdfs/Chemistry.pdf" download>Chemistry.pdf</a></li>
+                <li><a href="pdfs/Biology.pdf" download>Biology.pdf</a></li>
+            </ul>
+        </div>
+        <div id="account" style="display: none;">
+            <h2>My Account</h2>
+            <p>Email: <span id="accountEmail"></span></p>
+            <h3>Subjects Enrolled:</h3>
+            <ul>
+                <li>Math</li>
+                <li>Science</li>
+            </ul>
+            <button onclick="showSubjects()">Back</button> <!-- Added Back button -->
+        </div>
+    </div>
+
+    <script>
+        // Retrieve stored user data
+        const storedEmail = localStorage.getItem('email');
+
+        // Populate account details
+        document.getElementById('accountEmail').textContent = storedEmail || "Not logged in"; // Default message if no email
+
+        function showSubjects() {
+            document.getElementById('subjects').style.display = 'block';
+            document.getElementById('account').style.display = 'none';
+        }
+
+        function showAccount() {
+            document.getElementById('subjects').style.display = 'none';
+            document.getElementById('account').style.display = 'block';
+        }
+
+        function logout() {
+            // Clear login info and redirect to login page
+            localStorage.removeItem('email');
+            window.location.href = 'login.html';
+        }
+
+        // Check login status when the page loads
+        window.onload = function() {
+            const loggedIn = localStorage.getItem('email');
+            if (!loggedIn) {
+                window.location.href = 'login.html';
+            }
+        };
+    </script>
+</body>
+</html>
